@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euxo pipefail
+set -euo pipefail
 
 MAX_TIMES=10
 AIRPORT=/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport
@@ -8,6 +8,8 @@ AIRPORT=/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/
 
 TEMP_FILE=/tmp/ssid-scan-$(date "+%Y%m%d_%H%M%S").txt
 RESULT_FILE=ssid-scan-$(date "+%Y%m%d_%H%M").txt
+
+echo "scanner started"
 
 BEST=0
 CURRENT=0
@@ -27,3 +29,5 @@ for ((i = 1; i <= $MAX_TIMES; i++)); do
         echo "#${i} - got ${CURRENT}, not good enough"
     fi
 done
+
+echo "scanner ended"
