@@ -1,2 +1,3 @@
 # SSID-Scanner
-Collect SSID of all networks around you
+
+Scan and collect SSID of all networks around you 🕸️
