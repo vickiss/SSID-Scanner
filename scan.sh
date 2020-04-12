@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-MAX_TIMES=10
+MAX_TIMES=50
 WAIT_SEC=5
 
 AIRPORT=/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport
@@ -19,7 +19,7 @@ for ((i = 1; i <= $MAX_TIMES; i++)); do
     "$AIRPORT" -s >"$TEMP_FILE"
     CURRENT=$(wc -l "$TEMP_FILE" | awk '{print $1}')
     if [ "$CURRENT" -eq 0 ]; then
-        echo "  #${i} - ⏳ got blank result, wait for ${WAIT_SEC} sec"
+        printf "  %3s - ⏳ got blank result, wait for ${WAIT_SEC} sec\n" "#${i}"
         sleep $WAIT_SEC
         continue
     fi
@@ -27,9 +27,9 @@ for ((i = 1; i <= $MAX_TIMES; i++)); do
     if [ "$CURRENT" -gt "$BEST" ]; then
         BEST=$CURRENT
         mv "$TEMP_FILE" "$RESULT_FILE"
-        echo "  #${i} - ✅ got ${CURRENT}, best result for now"
+        printf "  %3s - ☑️  got ${CURRENT}, best result for now\n" "#${i}"
     else
-        echo "  #${i} - 🔄 got ${CURRENT}, not good enough"
+        printf "  %3s - 🔄 got ${CURRENT}, not good enough\n" "#${i}"
     fi
 done
 
