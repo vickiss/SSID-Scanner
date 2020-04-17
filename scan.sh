@@ -2,14 +2,22 @@
 
 set -euo pipefail
 
-MAX_TIMES=50
 WAIT_SEC=5
+MAX_TIMES=10
+if [ "$#" -ge 1 ]; then
+    MAX_TIMES=$1
+fi
+
+if ! [ "$MAX_TIMES" -gt 0 ] 2>/dev/null; then
+    echo "❗ max_times should be >= 1"
+    exit 1
+fi
 
 AIRPORT=/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport
 [ ! -f "$AIRPORT" ] && echo "Apple 'airport' not found" && exit 1
 
-TEMP_FILE=/tmp/ssid-scan-$(date "+%Y%m%d_%H%M%S").txt
-RESULT_FILE=ssid-scan-$(date "+%Y%m%d_%H%M").txt
+RESULT_FILE=ssid-scan-$(date "+%Y%m%d_%H%M%S").txt
+TEMP_FILE=/tmp/"$RESULT_FILE"
 
 echo "📶 scanner started"
 
