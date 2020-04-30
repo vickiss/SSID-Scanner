@@ -41,4 +41,4 @@ for ((i = 1; i <= $MAX_TIMES; i++)); do
     fi
 done
 
-echo "📶 scanner ended"
+echo "📶 scanner ended with ${BEST} and saved as ${RESULT_FILE}"
